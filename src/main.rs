@@ -1,5 +1,6 @@
 mod unittest;
 mod str;
+mod var;
 
 fn main() {
     let s1 = String::from("hello");

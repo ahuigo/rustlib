@@ -13,13 +13,13 @@ mod tests {
     #[test]
     fn test_format() {
         println!("{}",format!("hello2"));
-        format!("{} {}", 1, 2);           // => "1 2"
-        format!("{:?}", (3, 4));          // => "(3, 4)"
-        format!("{value}", value=4);      // => "4"
+        println!("{}",format!("{} {}", 1, 2));           // => "1 2"
+        println!("{}",format!("{:?}", (3, 4)));          // => "(3, 4)"
+        println!("{}",format!("{value}", value=4));      // => "4"
         let people = "Rustaceans";
-        format!("Hello {people}!");       // => "Hello Rustaceans!"
-        format!("{:04}", 42);             // => "0042" with leading zeros
-        format!("{:#?}", (100, 200));     // => "(
+        println!("{}",format!("Hello {people}!"));       // => "Hello Rustaceans!"
+        println!("{}",format!("{:04}", 42));             // => "0042" with leading zeros
+        println!("{}",format!("{:#?}", (100, 200)));     // => "(
                                           //       100,
                                           //       200,
                                           //     )"

@@ -1,4 +1,3 @@
-
 /*
 * Printing is handled by a series of macros defined in std::fmt some of which include:
    format!: write formatted text to String
@@ -11,8 +10,22 @@
 mod tests {
     #[test]
     fn test_println() {
+        // positional args
         println!("{} days", 31);
         println!("{0}, this is {1}. {1}, this is {0}", "Alice", "Bob");
+
+        //## raw print`:?`
+        // `{:?}`和`{:#?}` 区别是, 后者是带格式化缩进的
+        let a: u8 = 255;
+        let b = a.checked_add(20); // Option<u8>
+        let c = a.wrapping_add(20); //19
+        println!("b:{:?}, b:{:#?}, c={}", b, b, c); // b:None, b:None, c=19
+        println!("raw str:{:?}", "中"); // "中"
+
+        // print hex
+        let xyz: (f64, f64, f64) = (0.1, 0.2, 0.3);
+        println!("   0.1 + 0.2= {:x}", (xyz.0 + xyz.1).to_bits());
+        println!("   hex(-1i16)= {:x}", -1i16);
 
         // As can named arguments.
         println!(
