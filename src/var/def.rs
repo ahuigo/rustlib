@@ -18,17 +18,29 @@ fn test_let_mut() {
     println!("spaces len: {}", spaces); // 9
 
     /*
-    注意：let mut 不可声明新变量 
+    注意：let mut 不可声明新变量
     let mut spaces = "abc";
-    */ 
+    */
 }
 
 #[test]
-fn test_destructuring(){
-    let (a, b, c, d, );
+fn def_multi() {
+    let (a, b, c, d);
     (a, b) = (9, 8);
     // _ 代表匹配一个值，但是我们不关心具体的值是什么，因此没有使用一个变量名而是使用了 _
     [c, .., d, _] = [1, 2, 3, 4, 5];
     // Struct { e, .. } = Struct { e: 5 };
-    println!("{}{}{}{}",a,b,c,d)
+    println!("{}{}{}{}", a, b, c, d)
+}
+
+#[test]
+fn def_datatype() {
+    //显式类型/隐式类型
+    let a: i32 = 30i32;
+    let mut b = 30_i32;
+    // ### 下划线开头忽略未使用的变量
+    let _x = 5;
+    let c = "42".parse::<i32>();
+    b = b + 2_000;
+    println!("{},{},{:?}", a, b, c);
 }

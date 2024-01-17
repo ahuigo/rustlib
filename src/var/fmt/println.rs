@@ -17,9 +17,7 @@ mod tests {
         //## raw print`:?`
         // `{:?}`和`{:#?}` 区别是, 后者是带格式化缩进的
         let a: u8 = 255;
-        let b = a.checked_add(20); // Option<u8>
-        let c = a.wrapping_add(20); //19
-        println!("b:{:?}, b:{:#?}, c={}", b, b, c); // b:None, b:None, c=19
+        println!("a:{:?}, b:{:#?}, c={}", a, a, a); 
         println!("raw str:{:?}", "中"); // "中"
 
         // print hex

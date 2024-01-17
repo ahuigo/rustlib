@@ -1,5 +1,7 @@
 mod unittest;
 mod str;
+mod slice;
+mod func;
 mod var;
 
 fn main() {
