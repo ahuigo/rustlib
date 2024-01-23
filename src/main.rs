@@ -1,7 +1,7 @@
 mod unittest;
 mod str;
 mod slice;
-mod func;
+mod spec;
 mod var;
 
 fn main() {
@@ -10,7 +10,3 @@ fn main() {
     println!("s1 = {}, s2 = {}", s1, s2);
     // change(&s1);
 }
-
-// fn change(some_string: &mut String) {
-//     some_string.push_str(", world");
-// }

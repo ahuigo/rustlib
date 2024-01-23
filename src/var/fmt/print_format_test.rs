@@ -11,9 +11,13 @@ mod tests {
 
     // 这个属性告诉 Rust 编译器下面的函数是一个测试函数。cargo test 时会识别它
     /*
-    {:?}: Uses the Debug trait for formatting. This is useful for debugging, as it will print the data in a way that's useful for developers.
+    {:?}: Uses the `Debug` trait for formatting.
+        1. Debug: https://course.rs/basic/formatted-output.html#debug-%E7%89%B9%E5%BE%81
+        2. 也可使用 dbg! 宏，它会拿走表达式的所有权，然后打印出相应的文件名、行号等 debug 信息。除此之外，它最终还会把表达式值的所有权返回！
+            1. dbg! 输出到标准错误输出 stderr
+            2. 而 println! 输出到标准输出 stdout。
     {:#?}:  Formated with pretty-print.
-    {}: Uses the Display trait for formatting. This is meant for user-facing output.
+    {}: Uses the `Display trait` for formatting.
     {:o}: Formats integers as octal.
     {:x}: Formats integers as lowercase hexadecimal.
     {:X}: Formats integers as uppercase hexadecimal.
@@ -25,7 +29,7 @@ mod tests {
     {:.*}: Specifies the width and precision for a floating point number.
      */
     #[test]
-    fn test_format_raw() {
+    fn format_raw() {
         // 不带格式化缩进的Raw
         println!("{}", format!("{:?}", (100, 200))); // (100, 200)
                                                      // 带格式化缩进的Raw
@@ -35,22 +39,39 @@ mod tests {
                                                       //     )"
     }
     #[test]
-    fn test_format_num() {
+    fn format_num() {
         let xyz: (f64, f64, f64) = (0.1, 0.2, 0.3);
         //   0.1 + 0.2= 3fd3333333333334
         println!("   0.1 + 0.2= {:x}", (xyz.0 + xyz.1).to_bits());
         println!("{}", xyz.0 + xyz.1);
         println!("{:.2}", 0.3);
-        println!("{:b}", 10u8);// 1010
-        // => "0042" with leading zeros
+        println!("{:b}", 10u8); // 1010
+                                // => "0042" with leading zeros
         println!("{}", format!("{:04}", 42));
     }
     #[test]
-    fn test_format_args() {
+    fn format_args() {
         // 使用对象的display方法(相当于js .toString())
         println!("{}", format!("{} {}", 1, 2)); // => "1 2"
         println!("{}", format!("{value}", value = 4)); // => "4"
         let people = "Rustaceans";
         println!("{}", format!("Hello {people}!")); // => "Hello Rustaceans!"
+    }
+
+    #[test]
+    fn dbg_borrow_struct() {
+        #[derive(Debug)]
+        #[allow(dead_code)]
+        struct Rectangle {
+            width: u32,
+            height: u32,
+        }
+        let scale = 2;
+        let rect1 = Rectangle {
+            width: dbg!(30 * scale),
+            height: 50,
+        };
+        dbg!(&rect1);//borrow
+        dbg!(rect1);//move
     }
 }

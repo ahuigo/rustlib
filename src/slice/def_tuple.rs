@@ -1,7 +1,11 @@
-// define tuple
+// 模式匹配 解构赋值　元组
 #[allow(dead_code)] 
 fn def_tuple() {
     let tup = (500, 6.4, 1);
+    // 元组的成员还可以是一个元组
+    let _t1: (u8, (i16, u32)) = (0, (-1, 1));
+    // 元组可以是多组不同类型的元素
+    let _t2: (u8, u16, i64, &str, String) = (1u8, 2u16, 3i64, "hello", String::from(", world"));
 
     // 用.访问元组(array/slice 不行)
     let _a = tup.0;
@@ -24,4 +28,11 @@ fn return_tuple() {
     }
     // let (s2, len) = calculate_length(String::from("hello"));
     let _tup = calculate_length(String::from("hello"));
+}
+
+
+#[test]
+fn x(){
+    let too_long_tuple = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+    println!("too long tuple: {:?}", too_long_tuple);
 }

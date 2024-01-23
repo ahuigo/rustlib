@@ -14,7 +14,7 @@ mod tests {
         println!("{} days", 31);
         println!("{0}, this is {1}. {1}, this is {0}", "Alice", "Bob");
 
-        //## raw print`:?`
+        //## raw print(要求必须实现Debug trait)
         // `{:?}`和`{:#?}` 区别是, 后者是带格式化缩进的
         let a: u8 = 255;
         println!("a:{:?}, b:{:#?}, c={}", a, a, a); 

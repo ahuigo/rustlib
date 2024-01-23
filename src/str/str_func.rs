@@ -1,5 +1,7 @@
+
+
 /*
-# 字符串操作(&str + String) 一般是用`String`类型来操作字符串, `&str` 只有.replace() .split() 非inplace方法:
+# 字符串操作一般是inplace:只有.replace() .split() 非inplace方法:
 1. inplace 方法仅适用于`String`
 2. 以下方法基本都是inplace，无返回值
 */
@@ -28,7 +30,7 @@ fn test_replace() {
 
     repalce range该方法仅适用于 String 类型: 第一个参数表示替换的范围
 
-        s.replace_range(7..8, "R");
+        s.replace_range(7..8, "RUST");//inplace
     */
     let s = "rust rust!";
     let new_str = s.replace("rust", "RUST"); //RUST, RUST!
@@ -50,7 +52,7 @@ fn test_del_pop() {
         "string_remove 占 {} 个字节",
         std::mem::size_of_val(string_remove.as_str())
     );
-    // 直接删除第二个汉字
+    // 只删除第二个汉字
     string_remove.remove(3);
     dbg!(string_remove);
 
@@ -60,41 +62,28 @@ fn test_del_pop() {
     // 4. s.clear() —— 相当于s.truncate(0)
 }
 #[test]
-fn test_concat_plus() {
-    /*
-    1.使用 + 或者 += 连接字符串，要求右边的参数必须为字符串的切片引用（Slice）类型。
-    其实当调用 + 的操作符时，相当于调用了 std::string 标准库中的 add() 方法, 返回`String`
-        fn add(self, s: &str) -> String
-    */
-    let string_append = String::from("hello ");
-    let string_rust = String::from("rust");
-    // &string rust会自动编译器解引用为&str
-    let result = string_append + &string_rust;
-    let mut _result = result + "!";
-
-    // 2. 注意，self所有权被转移走了(可变引用), 然后返回新的String，self就会被释放
-    let s1 = String::from("hello,");
-    let s2 = String::from("world!");
-    // 在下句中，s1的所有权被转移走了，因此后面不能再使用s1, s2还是有效的
-    let s3 = s1 + &s2;
-    println!("{}|{}", s2, s3); // world!|hello,world!
-}
-
-#[test]
-fn test_concat_format() {
-    // format! 的用法与 print! 的用法类似，详见格式化输出。
-    // let s = format!("{} {}!", s1, s2);
-}
-#[test]
 fn test_loop() {
     // ### loop char
-    for c in "中国人".chars() {
+    let s = String::from("中国人");
+    for c in s.chars() {
         println!("{}", c); //type: char
     }
+    for (i, c) in s.chars().enumerate() {
+        if i == 0 {
+            assert_eq!(c, '中')
+        }
+    }
+
     // ### loop bytes
     for b in "中".bytes() {
         println!("{}", b); // 类型:u8
     }
+}
+
+#[test]
+fn start_with() {
+    let s = "hello rust";
+    s.starts_with("hello");
 }
 
 #[allow(dead_code)]
