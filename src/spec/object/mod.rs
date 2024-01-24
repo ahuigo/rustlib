@@ -1,4 +1,4 @@
 mod struct_def;
 mod enum_def;
-mod enum_match;
+mod match_destructuring;
 mod enum_impl_list;

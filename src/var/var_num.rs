@@ -1,5 +1,5 @@
 #[test]
-fn test_complex_num() {
+fn num_complex() {
     use num::complex::Complex;
     let a = Complex { re: 2.1, im: -1.2 };
     let b = Complex::new(11.1, 22.2);
@@ -9,10 +9,17 @@ fn test_complex_num() {
 }
 
 #[test]
-fn test_overflow() {
+fn num_overflow() {
         let a: u8 = 255;
         // Option<u8>
         let b = a.checked_add(20);
         // b:None, b:None
         println!("b:{:?}, b:{:#?}", b, b);
+}
+
+#[test]
+fn range_num(){
+    let _n1 = 0..10;
+    let _n1 = 0..=9;
+    let _chars = 'A'..='Z';
 }

@@ -21,7 +21,7 @@ fn ownership_move() {
     fn take_ownership(some_string: String) {
         println!("{}", some_string);
     }
-    take_ownership(s2); // move s2, s2 将无效
+    take_ownership(s2); // s2 is moved, s2 将无效
 }
 
 #[test]
@@ -63,8 +63,6 @@ fn owner_borrowed_mut_move(){//Not Copy trait
     // s.push_str(", world");//err: owner is mutable borrowed
     println!("{}",b1);
     s.push_str(", world");//ok, borrower give back owner
-
-
 }
 
 #[test]
@@ -129,7 +127,7 @@ fn borrow_func_mut() {
         some_string.push_str(", world");
     }
     let mut s = String::from("hello");
-    change(&mut s);
+    change(&mut s);// 调用可变引用函数
     println!("{}", s);
 }
 
@@ -151,10 +149,10 @@ fn borrow_scope() {
 fn borrow_move_mut_string() {
     // String 没有实现 Copy trait, 所以move
     let mut x = String::from("hello");
-    let y = &mut x; //y 被借用为可变引用(mut borrow)，x 不能再使用了
-    // println!("{}", x); //error
-    let y1 = y; // y 是可变的引用，被move到 y1 中，y 将无效
-    // y.clear();//error
+    let y = &mut x; 
+    // println!("{}", x); //Error: cannot borrow `x` as immutable because it is also borrowed as mutable
+    let y1 = y; // y is moved
+    // y.clear();//Error: value borrowed here after move
     println!("{}", y1); 
 }
 
@@ -165,7 +163,7 @@ fn borrow_copy_immut_string() {
     let x = String::from("hello");
     let y = &x; //y 被借用为不可变引用，x 还可再使用了
     let y1 = y; //Copy, 因为&str 字面值就是一个不可变的引用&T
-    println!("{},{}", x,y1); 
+    println!("{},{},{}", x,y1,y); // 三者，再次被借用
 }
 
 #[test]

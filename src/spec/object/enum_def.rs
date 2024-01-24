@@ -31,16 +31,18 @@ fn def_enum() {
 
 #[test]
 fn def_enum_with_value(){
-    // 任何类型的数据都可以放入枚举成员中
+    // 任何类型的数据都可以放入枚举成员中(甚至可放其它的enum)
     #[allow(unused)]
     enum PokerCard {
         Spades(u8),
         Diamonds(String),
+        Point(i32, i32),
         Move { x: i32, y: i32 },//代表匿名struct
 
     }
     
     let _s1 = PokerCard::Spades(5);
+    let _point = PokerCard::Point(129,29);
     let _p1 = PokerCard::Diamonds("A".to_string());
     let _m = PokerCard::Move{x:1,y:1};
 }
@@ -49,16 +51,19 @@ fn def_enum_with_value(){
 fn move_enum_value(){
     #[derive(Debug)]
     enum PokerCard {
-        Spades(u8),
-        Diamonds(String),
+        Some(i32),
     }
     
-    let s1 = PokerCard::Spades(5);
-    let p1 = PokerCard::Diamonds("A".to_string());
-    dbg!(&s1);
-    let _s2 = s1; //s1 is moved
-    let _p2 = p1; //p1 is moved
+    let s1 = PokerCard::Some(5);
+    let _s2 = s1; //s1(i32) is moved
     // dbg!(&s1);//error
+}
+#[test]
+fn copy_enum_value(){
+    // impl #[derive(Copy)] for Option
+    let s1 = Some(5);
+    let _s2 = s1; //s1(i32) is copied
+    dbg!(&s1);//ok
 }
 
 #[test]
