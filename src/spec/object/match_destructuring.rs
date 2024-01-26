@@ -123,6 +123,26 @@ fn match_pattern_enum() {
     println!("at the end: x = {:?}, y = {}", x, y); //Some(5),10
 }
 #[test]
+fn match_pattern_enum_move_and_borrow() {
+    // 1. move
+    let x = Some("abc".to_string());
+    match x {
+        Some(y) => println!("{}",y),
+        _ => println!("Default case, x = {:?}", x),
+    };
+    // dbg!(x);//Error: borrow of moved value: `x`
+
+    //2. borrow
+    enum Message {
+        Write(String),
+    }
+    let x = Message::Write("abc".to_string());
+    match &x {
+        Message::Write(y) => println!("{}",y),
+    };
+
+}
+#[test]
 fn match_pattern_matches() {
     // matches! 宏：https://mp.weixin.qq.com/s/u1x3-c4M53W-1b6kT_rgOQ
     #[derive(Debug)]

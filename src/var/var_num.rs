@@ -1,4 +1,9 @@
 #[test]
+fn num_type(){
+    let _x = 1i32;
+    let _y = 0.2f32;
+}
+#[test]
 fn num_complex() {
     use num::complex::Complex;
     let a = Complex { re: 2.1, im: -1.2 };
