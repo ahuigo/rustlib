@@ -49,12 +49,10 @@ fn init_destruct() {
     struct User {
         age: i32,
     }
-    let u1 = User {
-        age: 1,
-    };
+    let u1 = User { age: 1 };
 
-    let User{age: age1} = u1;
-    let User{age} = u1;
+    let User { age: age1 } = u1;
+    let User { age } = u1;
     println!("{},{}", age1, age);
 }
 
@@ -69,11 +67,11 @@ fn def_mut_struct() {
     }
 
     let mut u1 = User {
-        name:"Alex".to_string(),
+        name: "Alex".to_string(),
         age: 1,
         score: 100,
     };
-    u1.age =1;
+    u1.age = 1;
 }
 
 #[test]
@@ -101,17 +99,6 @@ fn def_unit_struct() {
     // }
 }
 
-#[test]
-fn def_trait() {
-    struct Unit;
-    trait SomeTrait {
-        // ...Some behavours defines here
-    }
-    // We don't care the the fields are in Unit, but we care its behaviors.
-    // So we use a struct with no fields and implement some behaviors for it
-    impl SomeTrait for Unit {}
-
-}
 
 #[test]
 fn move_struct() {
@@ -133,7 +120,7 @@ fn move_struct() {
 }
 
 #[test]
-fn borrow_struct_prop(){
+fn borrow_struct_prop() {
     #[derive(Debug)]
     struct Person {
         name: String,
@@ -146,7 +133,7 @@ fn borrow_struct_prop(){
     };
 
     // 通过这种解构式模式匹配，1. move: person.name 的所有权被转移给新的变量 `name`
-    // 2. borrow: 这里 ref 的使用相当于: let age = &person.age 
+    // 2. borrow: 这里 ref 的使用相当于: let age = &person.age
     let Person { name, ref age } = person;
 
     println!("The person's age is {}", age);
