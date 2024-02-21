@@ -13,13 +13,6 @@ fn analyze_slice(slice: &[i32]) {
 }
 
 #[test]
-fn def_array() {
-    let a = [9, 8, 7, 6, 5];
-    let a1 = [1;5]; //repeated 5 times
-    dbg!(a1);
-    let _first = a[0]; // 获取a数组第一个元素    
-}
-#[test]
 fn def_array_repeated_string() {
     // let a = ["Hi!".to_string(); 8]; //Err: `Copy` trait is required
     let array: [String; 8] = std::array::from_fn(|_i| String::from("Hi!"));
@@ -32,13 +25,21 @@ fn def_array_slice() {
     let a = [1, 2, 3, 4, 5];
     // Fixed-size array (type signature is superfluous).
     let _xs: [i32; 5] = [1, 2, 3, 4, 5];
-    // All elements can be initialized to the same value:100.
-    let ys = [100; 5];
-    for num in ys.iter() {
+    // repeating the same value
+    let a1 = [1;5]; //repeated 5 times(Copy trait is required)
+    dbg!(a1);
+    // Access array
+    let _first = a[0]; // 获取a数组第一个元素    
+    for num in a1.iter() {
         println!("array:{}", &num);
     }
 
     // 2. define slice
+    let _arrptr= &a;
+    let _arrptr= &[1,2];
+    let _slice = &a[..];
+    let _slice = &a[..3];
+    let _slice = &a[1..];
     let slice = &a[1..3];
     assert_eq!(slice, &[2, 3]);
     println!("{}", slice == &[2, 3]);

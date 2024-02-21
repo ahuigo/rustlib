@@ -7,13 +7,10 @@ fn generic_arg() {
 }
 
 #[test]
-fn generic_fn_where() {
+fn generic_func_where() {
     // struct Cacher<T: Fn(u32) -> u32> 
     // 还可以使用 `where` 来约束 T
-    struct Cacher<T>
-    where
-        T: Fn(u32) -> u32,
-    {
+    struct Cacher<T> where T: Fn(u32) -> u32, {
         calculation: T,
         value: Option<u32>,
     }
@@ -175,6 +172,11 @@ fn generic_const_expr() {
 */
 
 #[allow(unused)]
+/*
+rust 代码分发方式：
+1. 静态分发(static dispatch): `Box<T>`, 编译器会为每一个泛型参数对应的具体类型生成一份代码，对于运行期性能完全没有任何影响。
+2. 动态分发(dynamic dispatch): `Box<dyn Trait>`, 运行时，才能确定需要调用什么方法。trait代码中的关键字 dyn 正是在强调这一“动态”的特点
+ */
 fn generic_compile() {
     /*
     # 泛型代码的单态化(monomorphization)来保证效率: Rust在编译期中一个泛型对应的多个类型，生成各自的代码，因此损失了编译速度和增大了最终生成文件

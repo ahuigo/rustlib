@@ -3,9 +3,10 @@ use core::fmt::Debug;
 #[allow(unused)]
 use core::fmt::Display;
 
+
 #[test]
 fn trait_method() {
-    // 定义trait 行为
+    // 定义trait method
     pub trait Summary {
         fn summarize(&self) -> String;
     }
@@ -29,8 +30,31 @@ fn trait_method() {
     dbg!(weibo.summarize());
 }
 
+#[test] // ?Sized 是一个特殊的 trait bound，表示类型可能不是 Sized 的(即动态大小类型, 如切片编译时大小未知)
+fn trait_method_unsized_arg_associated() {
+    //　模仿：[1, 2].get(0).unwrap();
+    trait ListIndex<T: ?Sized> {
+        type Output: Sized; //trait associated type, 这里定义一个关联类型占位泛型
+        fn get(self, slice: &T) -> Option<&Self::Output>;
+    }
+    impl<T> ListIndex<[T]> for usize {//编译usize时,T类型不知道，所以需要?Sized
+        type Output = T;
+        fn get(self, slice: &[T]) -> Option<&Self::Output> {
+            slice.get(self)
+        }
+    }
+    // 使用1
+    #[allow(unused)]
+    let v = vec![String::from("中")];
+    let v = [String::from("aaa"), String::from("b")];
+    let index: usize = 1;
+    let e = index.get(&v).unwrap();
+    dbg!(&v[0]);
+    dbg!(e);
+}
+
 #[test]
-fn trait_method_default() {
+fn trait_method_default() {// default method
     pub trait Summary {
         fn summarize_author(&self) -> String;
 
@@ -60,7 +84,7 @@ fn trait_arg_type() {
     }
 
     pub fn notify(item1: &impl Summary, item2: &impl Summary) {
-        println!("Breaking news! {}", item1.summarize());
+        println!("Breaking news! {},{}", item1.summarize(), item2.summarize());
     }
 }
 
@@ -131,7 +155,7 @@ fn trait_return() {
 }
 #[allow(unused)]
 #[test] //返回实现了特征的类型
-fn trait_return_different() {
+fn trait_return_different_dyn() {
     trait Animal {
         fn noise(&self) -> String {
             "baaaaah!".to_string()
