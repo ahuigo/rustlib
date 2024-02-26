@@ -29,25 +29,30 @@ mod tests {
     {:.*}: Specifies the width and precision for a floating point number.
      */
     #[test]
-    fn format_raw() {
-        // 不带格式化缩进的Raw
+    fn format_raw() { // raw print(要求必须实现Debug trait)
+        // 1. 不带格式化缩进的Raw
         println!("{}", format!("{:?}", (100, 200))); // (100, 200)
-                                                     // 带格式化缩进的Raw
-        println!("{}", format!("{:#?}", (100, 200))); // => "(
-                                                      //       100,
-                                                      //       200,
-                                                      //     )"
+        println!("raw str:{:?}", "中"); // "中"
+        // 2. 带格式化缩进的Raw
+        println!("{:#?}", (100, 200));  // => "(
+                                        //       100,
+                                        //       200,
+                                        //     )"
+
     }
     #[test]
     fn format_num() {
-        let xyz: (f64, f64, f64) = (0.1, 0.2, 0.3);
-        //   0.1 + 0.2= 3fd3333333333334
-        println!("   0.1 + 0.2= {:x}", (xyz.0 + xyz.1).to_bits());
-        println!("{}", xyz.0 + xyz.1);
-        println!("{:.2}", 0.3);
+        // 2. binary
         println!("{:b}", 10u8); // 1010
-                                // => "0042" with leading zeros
-        println!("{}", format!("{:04}", 42));
+        // 3. hex
+        println!("   hex(-1i16)= {:x}", -1i16);// ffff
+        let xyz: (f64, f64, f64) = (0.1, 0.2, 0.3);
+        println!("   0.1 + 0.2= {:x}", (xyz.0 + xyz.1).to_bits());
+            //   0.1 + 0.2= 3fd3333333333334
+        // 4. float
+        println!("{}", xyz.0 + xyz.1);
+        // 5. precision: Keep 2 significant digits
+        println!("{:.2}", 0.3);
     }
     #[test]
     fn format_args() {
@@ -56,6 +61,41 @@ mod tests {
         println!("{}", format!("{value}", value = 4)); // => "4"
         let people = "Rustaceans";
         println!("{}", format!("Hello {people}!")); // => "Hello Rustaceans!"
+    }
+    #[test]
+    fn println_positional_args() {
+        // 1. positional args
+        println!("{} days", 31);
+        println!("My name is {0}, {1} {0}", "Bond", "Jame");
+    }
+
+    #[test]
+    fn format_named() {
+        let name = "Peter";
+        println!("{name}");
+        println!(
+            "{subject} {verb} {object}",
+            object = "the lazy dog",
+            subject = "the quick brown fox",
+            verb = "jumps over"
+        );
+    }
+
+    #[test]
+    fn format_pad() {
+        // 1. padding
+        println!("{}", format!("{:04}", 42));
+            // => "0042" with leading zeros
+
+        // 2. "     1", 5 white spaces and a "1".
+        println!("{number:>width$}", number = 1, width = 6);
+        // 3. pad numbers with extra zeroes. This will output "000001".
+        println!("{number:0>width$}", number = 1, width = 6);
+
+        // 3. this will also output "     1", 5 white spaces and a "1".
+        let number: f64 = 1.0;
+        let width: usize = 6;
+        println!("{number:>width$}");
     }
 
     #[test]

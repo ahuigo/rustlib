@@ -8,7 +8,7 @@ use core::fmt::Display;
 fn trait_method() {
     // 定义trait method
     pub trait Summary {
-        fn summarize(&self) -> String;
+        fn summarize(&self, prefix:&str) -> String;
     }
     // 定义结构体
     pub struct Weibo {
@@ -18,8 +18,8 @@ fn trait_method() {
 
     // 实现trait 行为
     impl Summary for Weibo {
-        fn summarize(&self) -> String {
-            format!("{}发表了微博{}", self.username, self.content)
+        fn summarize(&self, _pre:&str) -> String {
+            format!("{}:{}发表了微博{}", _pre,self.username, self.content)
         }
     }
 
@@ -27,7 +27,7 @@ fn trait_method() {
         username: String::from("张三"),
         content: String::from("今天天气不错"),
     };
-    dbg!(weibo.summarize());
+    dbg!(weibo.summarize("_"));
 }
 
 #[test] // ?Sized 是一个特殊的 trait bound，表示类型可能不是 Sized 的(即动态大小类型, 如切片编译时大小未知)
@@ -76,9 +76,22 @@ fn trait_method_default() {// default method
     }
 }
 
+#[test]
+fn trait_prelude_tryinto() {
+    let a: i32 = 10;
+    let b: u16 = 100;
+    // 隐式调用　use std::convert::TryInto;
+    // 因为常用的标准库中的特征通过 std::prelude 模块提前引入到当前作用域中，
+    let b_ = b.try_into().unwrap();
+
+    if a < b_ {
+        println!("Ten is less than one hundred.");
+    }
+}
+
 #[allow(unused)]
 #[test]
-fn trait_arg_type() {
+fn arg_trait_type() { //特征约束(trait bound): 参数被约束成Trait
     pub trait Summary {
         fn summarize(&self) -> String;
     }
@@ -89,17 +102,18 @@ fn trait_arg_type() {
 }
 
 #[allow(unused)]
-#[test] //特征约束(trait bound): 两个参数是同一个类型
-fn trait_arg_generic() {
+#[test] //特征约束(trait bound): 参数被约束成Trait generic
+fn arg_trait_generic() {
     pub trait Summary {
         fn summarize(&self) -> String;
     }
-    pub fn notify<T: Summary>(item1: &T, item2: &T) {}
+    // pub fn notify1(item1: &impl Summary, item2: &impl Summary) {}
+    pub fn notify2<T: Summary>(item1: &T, item2: &T) {}
 }
 
 #[allow(unused)]
-#[test] //多重约束
-fn trait_arg_multi() {
+#[test] //多重约束（multiple bounds）
+fn arg_trait_multi_bounds() {
     use core::fmt::Display;
     pub trait Summary {
         fn summarize(&self) -> String;
@@ -110,7 +124,7 @@ fn trait_arg_multi() {
 
 #[allow(unused)]
 #[test] // Where 约束 当特征约束变得很多时，函数的签名将变得很复杂：
-fn trait_arg_where() {
+fn arg_trait_multi_bounds_generic() {
     fn some_function1<T: Display + Clone, U: Clone + Debug>(t: &T, u: &U) -> i32 {
         1
     }
@@ -124,9 +138,9 @@ fn trait_arg_where() {
     }
 }
 
-#[test] // 约束Mul trait的Output
+#[test] // 约束trait自己的Output
 #[allow(unused)]
-fn trait_arg_constraint() {
+fn arg_trait_constraint_trait() {
     use std::ops;
     fn multiply<T: ops::Mul<Output = T>>(x: T, y: T) -> T {
         x * y
@@ -135,7 +149,7 @@ fn trait_arg_constraint() {
 
 #[allow(unused)]
 #[test] //返回实现了特征的类型
-fn trait_return() {
+fn return_trait() {
     trait Summary {
         fn summarize(&self) -> String {
             format!("(Read more ...)")
@@ -155,7 +169,7 @@ fn trait_return() {
 }
 #[allow(unused)]
 #[test] //返回实现了特征的类型
-fn trait_return_different_dyn() {
+fn return_trait_different_dyn() {
     trait Animal {
         fn noise(&self) -> String {
             "baaaaah!".to_string()
@@ -176,22 +190,6 @@ fn trait_return_different_dyn() {
     }
 }
 
-#[allow(unused)]
-fn trait_derive() { //todo
-}
-
-#[test]
-fn trait_prelude_tryinto() {
-    let a: i32 = 10;
-    let b: u16 = 100;
-    // 隐式调用　use std::convert::TryInto;
-    // 因为常用的标准库中的特征通过 std::prelude 模块提前引入到当前作用域中，
-    let b_ = b.try_into().unwrap();
-
-    if a < b_ {
-        println!("Ten is less than one hundred.");
-    }
-}
 
 #[test]
 fn case_add() {

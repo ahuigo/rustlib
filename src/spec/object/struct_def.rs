@@ -45,7 +45,7 @@ fn init_struct() {
 }
 
 #[test]
-fn init_destruct() {
+fn init_destructuring() {
     struct User {
         age: i32,
     }

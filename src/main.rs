@@ -1,8 +1,8 @@
 mod unittest;
 mod str;
-mod slice;
 mod spec;
 mod var;
+mod os;
 
 fn main() {
     let s1 = String::from("hello");
