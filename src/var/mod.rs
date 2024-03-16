@@ -1,3 +1,3 @@
 mod fmt;
-mod def;
+mod var_def;
 mod var_num;

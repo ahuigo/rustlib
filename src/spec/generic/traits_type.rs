@@ -1,4 +1,16 @@
 #[test] // ?Sized 是一个特殊的 trait bound，表示类型可能不是 Sized 的(即动态大小类型, 如切片编译时大小未知)
+fn trait_type_not_sized(){
+    use std::fmt::Display;
+    fn print<T: Display + 'static + ?Sized>(message: &T) {
+        println!("{}", message);
+    }
+    let mark_twain = "aaaa";// str is not Sized(任意长度未知)
+    print("aa");//size=2
+    print("aaa");//size=3
+    print(mark_twain);//size=4
+    print(&mark_twain);//引用的size 是固定的
+}
+#[test] 
 fn trait_type_associated() {
     //关联类型(associated type): trait 声明一个待定类型
     pub trait Iterator {

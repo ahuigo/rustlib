@@ -162,10 +162,11 @@ fn match_pattern_matches() {
 
 #[test]
 fn match_pattern_range() {
-    // 1. use matches!
+    // 1. use `matches!` macro
     let foo = 'f';
     assert!(matches!(foo, 'A'..='Z' | 'a'..='z'));
-    // 2. use match
+
+    // 2. use match range
     match 'f' {
         'A'..='Z' | 'a'..='z' => true,
         _ => false,

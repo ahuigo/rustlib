@@ -28,3 +28,12 @@ fn range_num(){
     let _n1 = 0..=9;
     let _chars = 'A'..='Z';
 }
+#[test]
+fn type_as(){
+    let speed = 42u8;
+    let cph = 2u8;
+    let x = (speed * cph) as f64 * 0.9;
+    let y = x as u32;
+    dbg!(y);
+    // let _x = speed * 100; //overflow
+}

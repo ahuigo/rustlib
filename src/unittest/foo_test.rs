@@ -1,7 +1,15 @@
+/*
+cli运行：
+RUST_BACKTRACE=full
+RUST_BACKTRACE=1 cargo test --package myrustlib --bin myrustlib -- spec::func::error::err_backtrace --exact --nocapture
+RUST_BACKTRACE=1 cargo test -- spec::func::error::err_backtrace 
+RUST_BACKTRACE=1 cargo test -- unittest::foo_test::tests
+RUST_BACKTRACE=1 cargo test -- unittest::foo_test::tests::myadd
+RUST_BACKTRACE=1 cargo test -- unittest::foo_test::myadd2
+ */
 // 这是一个条件编译标志. cargo build 或者 cargo run, 它包围的代码不会被编译进最终的二进制文件中
 #[cfg(test)]
 // 这里`mod tests`定义一个新的mod 名字叫tests, 完整命名空间是 crate::unittest::foo_test::tests; 
-// 这个mod不是必须的, 只是为了防止命名冲突
 mod tests {
     // use std::io::{self, Write, Read};
     // use crate::unittest::foo::add;
