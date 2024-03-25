@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 num = "0.4.0" # use num::complex::Complex;
 rand = "0.8.5"
+notify = "=5.0.0"
