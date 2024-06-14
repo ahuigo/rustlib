@@ -40,6 +40,7 @@ fn set_linger(socket_fd: RawFd, linger_duration: Option<Duration>) -> io::Result
         }
     });
 
+    // 尝试在套接字上设置 SO_LINGER 选项，并将延迟时间设置为 0。这通常会告诉操作系统，在调用 close 之后立即放弃任何未发送的数据并发送一个 RST 包给对方
     let ret = unsafe {
         setsockopt(
             socket_fd,
@@ -51,8 +52,10 @@ fn set_linger(socket_fd: RawFd, linger_duration: Option<Duration>) -> io::Result
     };
 
     if ret == 0 {
+        println!("SO_LINGER set successfully");
         Ok(())
     } else {
+        println!("Failed to set SO_LINGER");
         Err(io::Error::last_os_error())
     }
 }
