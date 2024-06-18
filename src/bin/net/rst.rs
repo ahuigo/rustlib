@@ -5,8 +5,20 @@ use std::time::Duration;
 use std::{io, thread};
 
 
-// echo m:9999 ;
+// curl m:9999 ;
 // failure: Connection reset by peer
+/*
+网关可能在多种情况下关闭连接，并返回 RST 包给客户端，导致客户端出现 "Connection reset by peer" 的错误。以下是一些可能的情景：
+安全策略违规：如果网关检测到流量违反了安全策略（如不允许的端口通信、协议或特定的数据模式），它可能会重置连接。
+资源限制：网关可能因资源限制（如内存不足、CPU 负载过高、连接数达到上限）而无法处理新的或现有的连接，进而发送 RST 包主动关闭连接。
+无效的数据包：如果收到的数据包不符合预期的格式或者细节有误，网关可能会放弃当前的连接并发送 RST 包。
+超时：连接在一定时间内没有活动，或者 TCP 握手未在配置的超时时间内完成，网关可能会发送 RST 包重置连接。
+路由问题：当网关不能找到前往目标地址的有效路由时，可能会通过发送 RST 包来终止连接。
+负载均衡器的决策：如果网关同时也是一个负载均衡器，它可能根据设定的规则（例如健康检查失败）来重置某些连接。
+防火墙拦截：网络中的防火墙可能会识别到不正常或恶意的通信尝试，而指示网关发送 RST 包以阻断这些连接。
+后端服务响应：如果网关作为代理服务器或反向代理服务器，它会将客户端的请求转发到后端服务，如果后端服务关闭了连接或发送了 RST 包，网关可能也会将 RST 包转发给客户端。
+
+ */
 fn main() -> io::Result<()> {
     let listener = TcpListener::bind("127.0.0.1:9999")?;
     println!("Listening on 127.0.0.1:9999");
@@ -14,13 +26,11 @@ fn main() -> io::Result<()> {
     for stream in listener.incoming() {
         match stream {
             Ok(stream) => {
-                // 在新线程中处理连接
                 thread::spawn(move || {
                     handle_client(stream);
                 });
             }
             Err(e) => {
-                // 输出连接错误信息
                 println!("Connection failed: {}", e);
             }
         };
