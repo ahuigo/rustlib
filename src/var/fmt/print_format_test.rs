@@ -9,7 +9,6 @@
 #[cfg(test)]
 mod tests {
 
-    // 这个属性告诉 Rust 编译器下面的函数是一个测试函数。cargo test 时会识别它
     /*
     {:?}: Uses the `Debug` trait for formatting.
         1. Debug: https://course.rs/basic/formatted-output.html#debug-%E7%89%B9%E5%BE%81

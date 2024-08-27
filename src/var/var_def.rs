@@ -18,7 +18,7 @@ fn test_let_mut() {
     println!("spaces len: {}", spaces); // 9
 
     /*
-    注意：let mut 不可声明新变量
+    注意：let mut 不可声明同名新变量
     let mut spaces = "abc";
     */
 }

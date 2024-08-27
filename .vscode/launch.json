@@ -1,0 +1,156 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "'net_rst'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=net_rst",
+                    "--package=myrustlib"
+                ],
+                "filter": {
+                    "name": "net_rst",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "unit tests in executable 'net_rst'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=net_rst",
+                    "--package=myrustlib"
+                ],
+                "filter": {
+                    "name": "net_rst",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "executable 'myrustlib'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=myrustlib",
+                    "--package=myrustlib"
+                ],
+                "filter": {
+                    "name": "myrustlib",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "unit tests in executable 'myrustlib'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=myrustlib",
+                    "--package=myrustlib"
+                ],
+                "filter": {
+                    "name": "myrustlib",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "executable 'net_syn'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=net_syn",
+                    "--package=myrustlib"
+                ],
+                "filter": {
+                    "name": "net_syn",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "unit tests in executable 'net_syn'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=net_syn",
+                    "--package=myrustlib"
+                ],
+                "filter": {
+                    "name": "net_syn",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "executable 'hello'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=hello",
+                    "--package=myrustlib"
+                ],
+                "filter": {
+                    "name": "hello",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "unit tests in executable 'hello'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=hello",
+                    "--package=myrustlib"
+                ],
+                "filter": {
+                    "name": "hello",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

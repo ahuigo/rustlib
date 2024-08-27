@@ -44,6 +44,7 @@ fn test_def_char_len() {
     // 由于 Unicode 都是 4 个字节编码，因此字符类型都是占用 4 个字节：
     let x = '中';
     let y = 'A';
+    let _y_u8 = b'A';
     assert_eq!(std::mem::size_of_val(&x), 4);
     assert_eq!(std::mem::size_of_val(&y), 4);
     // String 是utf8编码，一个中文字符占3个字节
@@ -54,19 +55,51 @@ fn test_def_char_len() {
 fn def_string_vec(){
     let s = String::from("hello");
     // some bytes, in a vector
+
     let v = vec![104, 101, 108, 108, 111];
     // Turn a bytes vector into a String
     // We know these bytes are valid, so we'll use `unwrap()`.
     let s1 = String::from_utf8(v).unwrap();
     assert_eq!(s, s1);
+
+    // let s to 
+    let mut s2 = s;
+    s2.push_str("a")
+
 }
 
 #[test]
+fn def_string_mut() {
+    // Note: 修改的两个条件——　mut　＋　可变类型
+    // String:有所有权, 可增长（mut）。
+    // &String:无所有权, 可增长
+    // &str:无所有权, 不可增长
+    let s1 = "hello".to_string();
+
+    // BadCase：s2 是可变引用, 所以可以修改s2指向变量字符串。但是不能修改s2指向的变量的data
+    // let mut s2 = &s; 
+    // s.push('!');
+
+    // 修改1：move+mut
+    let mut s = s1;
+    // s[0] = 'H'; //error: 因为一个字符是多字节的，不能直接用index 访问、修改
+    s.push('!');
+
+
+    // 修改2:(要转成vec<u8>)
+    let mut bytes = s.into_bytes(); // move to bytes Vec<u8>
+    bytes[0] = b'a';
+    s = String::from_utf8(bytes).expect("Invalid UTF-8"); // move bytes to s
+    dbg!(s);
+
+}
+#[test]
 fn def_str_slice() {
-    // to String
     let _s = String::from("hello");
     let s = "hello".to_string();
-    // to &str
+
+
+    // to slice &str
     let _s1 = &s[..];
     let _s1 = s.as_str();
     // let _a = _s1[0];
